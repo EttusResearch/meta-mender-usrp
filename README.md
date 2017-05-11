@@ -20,4 +20,16 @@ in addition to `meta-mender` dependencies.
 
 - Add following to your local.conf (including configuration required by meta-mender-core)
 
+
+    INHERIT += "mender-full"
+    MENDER_ARTIFACT_NAME = "release-5"
+    MENDER_STORAGE_DEVICE = "/dev/mmcblk0"
+    MENDER_STORAGE_TOTAL_SIZE_MB = "7168"
+    IMAGE_ROOTFS_EXTRA_SPACE = "0"
+    MENDER_SERVER_URL = "https://mender.ettus.com"
+
+    FILESEXTRAPATHS_prepend_pn-mender := "${TOPDIR}/../:"
+    SRC_URI_append_pn-mender = " file://server.crt"
+
+
 - Run `bitbake <image name>`
