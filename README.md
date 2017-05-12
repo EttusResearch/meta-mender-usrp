@@ -16,7 +16,8 @@ in addition to `meta-mender` dependencies.
 
 - Read [the Mender documentation on Building a Mender Yocto image](https://docs.mender.io/Artifacts/Building-Mender-Yocto-image) for Mender specific configuration.
 - Set MACHINE to one of the following
-    - sulfur
+    - ni-sulfur-rev2
+    - ni-sulfur-rev3
 
 - Add following to your local.conf (including configuration required by meta-mender-core)
 
