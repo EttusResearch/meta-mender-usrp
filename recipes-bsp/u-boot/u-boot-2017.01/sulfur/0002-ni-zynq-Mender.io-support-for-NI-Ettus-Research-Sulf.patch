@@ -1,4 +1,4 @@
-From 164092c44c171cbe0d045df2c7a40dae32b12b02 Mon Sep 17 00:00:00 2001
+From df1d7face3e482975cc6bb2506788ca1f84093ad Mon Sep 17 00:00:00 2001
 From: Moritz Fischer <moritz.fischer@ettus.com>
 Date: Wed, 10 May 2017 22:24:04 -0700
 Subject: [PATCH 2/2] ni: zynq: Mender.io support for NI Ettus Research Sulfur

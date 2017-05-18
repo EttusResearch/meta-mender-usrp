@@ -1,6 +1,6 @@
-From 410d33472a2b12665e2e8dfe11c2680180d9a31f Mon Sep 17 00:00:00 2001
+From 8933af2244591953f138b4733c62d7a608e49c66 Mon Sep 17 00:00:00 2001
 From: Moritz Fischer <moritz.fischer@ettus.com>
-Date: Tue, 4 Apr 2017 13:20:28 -0700
+Date: Wed, 17 May 2017 14:03:11 -0700
 Subject: [PATCH 1/2] ni: zynq: Mender.io support for NI Ettus Research Sulfur
  Rev3 SDR
 
@@ -10,8 +10,8 @@ the default bootconfiguration to run ${mender_setup} first.
 Signed-off-by: Moritz Fischer <moritz.fischer@ettus.com>
 ---
  configs/ni_sulfur_rev3_defconfig |  2 +-
- include/configs/ni_sulfur_rev3.h | 12 ++++--------
- 2 files changed, 5 insertions(+), 9 deletions(-)
+ include/configs/ni_sulfur_rev3.h | 17 +++++++----------
+ 2 files changed, 8 insertions(+), 11 deletions(-)
 
 diff --git a/configs/ni_sulfur_rev3_defconfig b/configs/ni_sulfur_rev3_defconfig
 index 2a6a519..42bb18e 100644
@@ -27,10 +27,10 @@ index 2a6a519..42bb18e 100644
  # CONFIG_DISPLAY_CPUINFO is not set
  CONFIG_SPL=y
 diff --git a/include/configs/ni_sulfur_rev3.h b/include/configs/ni_sulfur_rev3.h
-index 609eebe..2e68edf 100644
+index 46715bc..85505db 100644
 --- a/include/configs/ni_sulfur_rev3.h
 +++ b/include/configs/ni_sulfur_rev3.h
-@@ -14,20 +14,16 @@
+@@ -14,26 +14,23 @@
  #include "zynq-common.h"
  #undef CONFIG_ENV_IS_NOWHERE
  
@@ -41,16 +41,25 @@ index 609eebe..2e68edf 100644
  #undef CONFIG_EXTRA_ENV_SETTINGS
  #define CONFIG_EXTRA_ENV_SETTINGS	\
 -	"fit_image=fit.itb\0"		\
--	"bootargs=root=/dev/mmcblk0p2 rw rootwait uio_pdrv_genirq.of_id=usrp-uio\0" \
 +	"fit_image=boot/fitImage\0"	\
+ 	"ec_disable_swsync=0\0"		\
+-	"ec_image=ec-sulfur-rev3.RW.bin\0" \
+-	"bootargs=root=/dev/mmcblk0p2 rw rootwait uio_pdrv_genirq.of_id=usrp-uio\0" \
++	"ec_image=lib/firmware/ni/ec-sulfur-rev3.RW.bin\0"	\
 +	"bootargs=root=${mender_kernel_root} rw rootwait uio_pdrv_genirq.of_id=usrp-uio\0" \
  	"load_addr=0x2000000\0"		\
  	"fit_size=0x800000\0"           \
  	"fdt_high=0x20000000\0"         \
  	"initrd_high=0x20000000\0"      \
--	"sdboot=echo Copying FIT from SD to RAM... && " \
+-	"sdboot=if test ${ec_disable_swsync} = 0; then \
++	"sdboot=run mender_setup; " \
++		"if test ${ec_disable_swsync} = 0; then "\
+ 			"echo Copying MCU FW from SD to RAM... && " \
+-			"load mmc 0 ${load_addr} ${ec_image} && " \
++			"ext4load ${mender_uboot_root} ${load_addr} ${ec_image} && " \
+ 			"crosec swsync ${load_addr} ${filesize}; fi;" \
+ 		"echo Copying FIT from SD to RAM... && " \
 -		"load mmc 0 ${load_addr} ${fit_image} && " \
-+	"sdboot=run mender_setup; echo Copying FIT from SD to RAM... && " \
 +		"ext4load ${mender_uboot_root} ${load_addr} ${fit_image} && " \
  		"bootm ${load_addr}\0" \
  	"jtagboot=echo TFTPing FIT to RAM... && " \
