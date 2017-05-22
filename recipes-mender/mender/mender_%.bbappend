@@ -3,6 +3,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 SRC_URI_append = " \
     file://mender-device-identity \
     file://mender-inventory-serial \
+    file://server.crt \
 "
 
 do_install_append() {
