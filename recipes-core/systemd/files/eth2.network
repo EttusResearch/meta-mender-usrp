@@ -5,4 +5,4 @@ Name=eth2
 Address=192.168.20.2/24
 
 [Link]
-MTUBytes=9000
+MTUBytes=8000
