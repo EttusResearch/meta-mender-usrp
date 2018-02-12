@@ -1,5 +1,5 @@
 [Match]
-Name=eth1
+Name=sfp0
 
 [Network]
 Address=192.168.10.2/24
